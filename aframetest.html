@@ -101,6 +101,8 @@
 
     <a-scene fog="type: linear; color: yellow; density: 0.005">
       <a-assets>
+
+        <a-asset-item id="room" src="roomenvironment.gltf"></a-asset-item>
         <!-- https://sketchfab.com/3d-models/elephant-animation-idle-a8e7e10f005f4baab0a2f5079d759fcd -->
         <a-asset-item id="elephant" src="img/elephant/scene.gltf"></a-asset-item>
         
@@ -146,6 +148,10 @@
         sound="src: #human01"
         sound-events>
       </a-gltf-model>
+
+      <a-gltf-model src="#room"
+        position="0 0 -10">
+        </a-gltf-model>
 
       <a-gltf-model src="#elephant"
         scale="0.1 0.1 0.1"
