@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Video in 3D</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="description" content="Using A-Frame to create virtual wold in browser" />
+    <!-- https://aframe.io/aframe/dist/ -->
+    <!-- Minified production build is recommended -->
+    <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-text-geometry-component@0.5.1/dist/aframe-text-geometry-component.min.js"></script>
+
+    <style>
+    body { font-family: sans-serif; }
+      nav {
+        position: fixed;
+        top: 10px;
+        left: 10px;
+        border: 1px solid #000;
+        padding: 5px;
+        background-color: rgba(255, 255, 255, 0.6);
+        border-radius: 5px;
+        z-index: 1000;
+        cursor: crosshair;
+      }
+      .modal {
+      display: none; /* Hidden by default */
+      position: fixed; /* Stay in place */
+      z-index: 100; /* Sit on top */
+      left: 0;
+      top: 0;
+      width: 100%; /* Full width */
+      height: 100%; /* Full height */
+      overflow: auto; /* Enable scroll if needed */
+      background-color: rgba(0,0,0,0.3);
+  }
+
+  /* Modal Content/Box - https://www.w3schools.com/howto/howto_css_modals.asp */
+  .modal-content {
+      background-color: #fff;
+      margin: 5vh auto; /* 15% from the top and centered */
+      padding: 10px;
+      border: 1px solid #000;
+  }
+  /* The Close Button */
+  .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+  }
+
+  .close:hover,
+  .close:focus {
+      color: red;
+      text-decoration: none;
+      /*cursor: url('covid32.png'), default !important;*/
+  }
+  .aframebox {
+    width: 95vw;
+height: 90vh;
+margin: auto;
+}
+    </style>
+  </head>
+  <body>
+
+    <!-- In this example the nav is outside the 3D virtual world -->
+    <nav><a data-modal="modal001">About</a></nav>
+    <div id="modal001" class="modal">
+  <div class="modal-content" style="width:400px; height:350px">
+    <a class="close">&times;</a>
+    <h1>This Page Is Using AFrame for WebVR</h1>
+    <p>In this example the A-Frame virtual world is using the embedded attribute to have it be an element in this web page along with non-3D/VR elements below it.  This page demonstrates the flexibility of A-Frame as it employs the native languages of the web, i.e. HTML and JS.</p>
+  </div>
+  </div>
+
+      <!-- Create a scene -->
+    <a-scene  class="aframebox" embedded>
+
+      <!-- load in assets using appropriate tags, i.e. images, fonts, video...
+    https://media.giphy.com/media/xUA7aUEo7D04nsmZoc/giphy.gif -->
+      <a-assets>
+        <img src="img/sand.jpg" id="grid" crossorigin="anonymous" />
+
+        <img
+          src="https://i0.wp.com/bdtechtalks.com/wp-content/uploads/2019/07/robot-hand-artificial-intelligence.jpg"
+          id="robot"
+          crossorigin="anonymous"
+        />
+
+        <!-- research issues loading externally linked videos -->
+        <video
+          id="video"
+          controls
+          autoplay
+          loop
+          poster="video/gob.png"
+          crossorigin="anonymous"
+        >
+          <source src="video/gob.mp4" type="video/mp4">
+        </video>
+
+        <a-asset-item
+          id="exoItalicFont"
+          src="https://cdn.glitch.com/c719c986-c0c5-48b8-967c-3cd8b8aa17f3%2Fexo2BlackItalic.typeface.json?1490305922725"
+        ></a-asset-item>
+      </a-assets>
+      <!-- end assets -->
+
+      <!--
+            position the assets as entities in the 3D world, position and rotation are based on x, y, z values
+            position="x y z" - center or starting point is 0 0 0, play with position values to see location changes
+            play with rotation values that are based on degrees
+            play with scale - width and height
+       -->
+      <a-entity position="-3 1 -6" rotation="5 0 0">
+        <a-entity
+          position="1 0 0.3"
+          text-geometry="value: The web will be immersive...; font: #exoItalicFont; style: italic; size: 0.8; weight: bold; height: 0;"
+          material="shader: flat; color: red"
+        ></a-entity>
+      </a-entity>
+
+      <!-- The video asset is 2D and is placed onto a plane, like a skin.  Video requires a server -->
+      <a-plane
+        position="-15 10 -7"
+        rotation="30 45 0"
+        width="12"
+        height="8"
+        src="#video"
+      ></a-plane>
+
+      <a-plane
+        position="18 8 -30"
+        rotation="0 -45 0"
+        width="9"
+        height="6"
+        src="#robot"
+      ></a-plane>
+
+      <a-entity
+        geometry="primitive: plane; width: 10000; height: 10000;"
+        rotation="-90 0 0"
+        material="src: #grid; repeat: 10000 10000; transparent: true;metalness:0.6; roughness: 0.4;"
+      ></a-entity>
+
+      <a-sky
+        color="skyblue"></a-sky>
+
+    </a-scene>
+
+    <div>
+      <h1>A-Frame Example as Embedded Element</h1>
+      <p>Some information here...</p>
+
+    <!-- Modal 2D Box - https://www.w3schools.com/howto/howto_css_modals.asp  -->
+    <script>
+// Get the modal
+var modal = document.getElementById("modal001");
+
+// Get the button that opens the modal
+var btn = document.querySelector("nav");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks the button, open the modal
+btn.onclick = function() {
+  modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+</script>
+  </body>
+</html>

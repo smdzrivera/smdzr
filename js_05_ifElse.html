@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>JS Radio Button</title>
+    <script>
+      function genderButton(form) {
+        /* a "for" loop reads through a code block a number of times:
+	       for (statement 1; statement 2; statement 3) {
+            code block to be executed
+	       }*/
+        for (let count = 0; count < 4; count++) {
+          if (form.gender[count].checked) {
+            if (count == 0) {
+              alert("You have selected female as gender.");
+              break;
+            } else if (count == 1) {
+              document.write("You have selected male as gender.");
+              break;
+            } else if (count == 2) {
+              alert("You have selected gender fluid.");
+              break;
+            } else if (count == 3) {
+              alert("You are non-binary.");
+              break;
+            }
+          }
+        }
+        //alert(form.major.checked);
+      }
+    </script>
+  </head>
+
+  <body>
+    <form name="testForm">
+      <fieldset>
+        <legend>Gender:</legend>
+        <ul>
+          <li>
+            <label>
+              <input type="radio" name="gender" value="female" /> Female
+            </label>
+          </li>
+          <li>
+            <label>
+              <input type="radio" name="gender" value="male" /> Male
+            </label>
+          </li>
+          <li>
+            <label>
+              <input type="radio" name="gender" value="fluid" /> Gender Fluid
+            </label>
+          </li>
+          <li>
+            <label>
+              <input type="radio" name="gender" value="Non-binary" /> Non-binary
+            </label>
+          </li>
+        </ul>
+      </fieldset>
+
+      <p>
+        <input type="submit" value="Send It!" onClick="genderButton(this.form)" />
+        <input type="reset" />
+      </p>
+    </form>
+    <h2 id="gender"></h2>
+  </body>
+</html>

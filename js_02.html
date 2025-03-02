@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Using Variables</title>
+  </head>
+
+  <body>
+    <script>
+    //variables are containers for storing data values.
+    //let, var and const are key terms to declare a variable
+    // let - local - limited to code block, statement or expression
+    // var - global - can be accessed outside the declaration scope
+    // const - unchanging value - constant - same value through the life of the variable
+    //const must be assigned a value when declared
+    /*
+    Names can contain letters, digits, underscores, and dollar signs.
+    Names must begin with a letter
+    Names can also begin with $ and _
+    Names are case sensitive (y and Y are different variables)
+    Reserved words (like JavaScript keywords) cannot be used as names; they will throw syntax error
+    */
+      let noun;
+      var adjective;
+      const phrase = prompt("Please enter an exclamatory catch phrase.", " ");
+      //The equal sign is an "assignment" operator, not an "equal to" operator.
+      //The "equal to" operator is written like == in JavaScript.
+      //The prompt() method displays a dialog box that prompts the visitor for input.
+      //JavaScript variables can hold numbers and text values, text values are called strings
+      //Strings are written inside double or single quotes. Numbers are written without quotes.
+      adjective= prompt("Please enter an Adjective.", " ");
+      noun= prompt("Please enter the name of a Celebrity.", " ");
+      //The html page is the document, write commands document to write...
+      document.write("<p>There once was a " + adjective + " celebrity named " + noun + " and the celebrity's favorite exclamatory was " + phrase + "!" + "</p>");
+    </script>
+  </body>
+</html>

@@ -1,0 +1,49 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sound Component</title>
+
+  <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
+  <!-- one of many distribution networks -->
+  <script src="https://cdn.jsdelivr.net/npm/aframe-event-set-component@5.0.0/dist/aframe-event-set-component.min.js"></script>
+
+  <!-- https://aframe.io/docs/1.6.0/components/sound.html -->
+  <script>
+  AFRAME.registerComponent('sound-events', {
+    init: function () {
+      var el = this.el;  // <a-box>
+      el.addEventListener('click', function () {
+        el.components.sound.playSound();
+      });
+      el.addEventListener('mouseleave', function () {
+        el.components.sound.pauseSound();
+      });
+    }
+  });
+  </script>
+</head>
+
+<body>
+  <a-scene>
+    <a-assets>
+
+      <!-- preload sound in a-assets tags -->
+
+      <audio id="stimulus" src="audio/stimulus.mp3" preload="auto"></audio>
+    </a-assets>
+
+    <!-- Using an event to trigger sound -->
+    <a-camera>
+      <!-- 2D Web cursor events are synthetic with WebVR and A-Frame
+          https://aframe.io/docs/1.2.0/components/cursor.html -->
+      <a-cursor></a-cursor>
+    </a-camera>
+
+    <!-- playing sound on mouseenter and pausing on mouseleave from code in script tags above -->
+    <a-box position="0 1.5 -2" rotation="0 45 30" material="color: blue"
+                sound="src: #stimulus" sound-events></a-box>
+
+  </a-scene>
+</body>
+</html>

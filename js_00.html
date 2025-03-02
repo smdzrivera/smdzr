@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Basic JS</title>
+    <style>
+    /* https://www.w3schools.com/cssref/pr_class_cursor.asp */
+      h1 {cursor: crosshair;}
+    </style>
+
+  </head>
+
+  <body>
+    <!-- onclick is a mouse or user event that invokes the displaymessage function-->
+    <h1 onclick="displayMessage()">Greetings!</h1>
+    <div id="message"></div>
+
+    <script>
+      //A JavaScript function is a block of code designed to perform a particular task.
+      //A JavaScript function is executed when "something" invokes it (calls it).
+      function displayMessage() {
+      	alert("Hello World! " + "Today is " + Date());
+        document.getElementById("message").innerHTML = "Hello World! " + "Today is " + Date();
+      }
+    </script>
+  </body>
+</html>

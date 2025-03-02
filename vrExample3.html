@@ -1,0 +1,69 @@
+<html>
+  <head>
+    <!-- master builds are unstable bleeding-edge unstable builds that contain newer fixes
+          https://aframe.io/aframe/dist/ -->
+    <script src="https://aframe.io/aframe/dist/aframe-master.min.js"></script>
+  </head>
+  <body>
+    <a-scene>
+      <a-assets>
+        <!-- Add sky and horizon asset -->
+        <img id="sky" src="img/vectorLake360.jpg">
+         <!-- Add texture here: -->
+        <img src="img/grass1.jpg" id="grass" />
+
+        <!-- from Sketchfab, JuanG3D -->
+        <a-asset-item id="character" src="img/among_us_character/scene.gltf"></a-asset-item>
+
+        <audio id="background" src="https://cdn.aframe.io/basic-guide/audio/backgroundnoise.wav"></audio>
+
+      </a-assets>
+
+      <a-sky src="#sky"></a-sky>
+      <!-- Add primitive here: -->
+      <a-plane src="#grass"
+        rotation="-90 0 0"
+        width="20"
+        height="20">
+      </a-plane>
+
+      <a-text
+        value="Hello!"
+        color="#ff6600"
+        align="center"
+        position="0 3 -4"
+        scale="4 4 4"
+        animation="property: object3D.position.y;
+          to: 3.3;
+          dir: alternate;
+          dur: 5000;
+          loop: true">
+      </a-text>
+
+      <!-- scale="1.5 1.5 1.5" -->
+      <a-gltf-model src="#character"
+        position="0 1 -4"
+        scale="0.005 0.005 0.005"
+        animation="property: object3D.position.y;
+          to: 1.5;
+          dir: alternate;
+          dur: 5000;
+          loop: true">
+      </a-gltf-model>
+
+      <!-- https://htmlcolorcodes.com/color-picker/ -->
+      <a-light
+        type="point"
+        intensity="2"
+        color="#FFF59E"
+        position="2 4 4"></a-light>
+
+      <a-sound
+        src="#background"
+        autoplay="true"
+        position="-3 1 -4"
+        loop="true"></a-sound>
+
+    </a-scene>
+  </body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Expression &amp; Control Flow</title>
+    <script>
+      //A fragment of code that produces a value is called an expression
+      //expression - comibation of values, variables, functions
+      //strings of true and false are printed to the browser
+      //due to comparison operators - < > ==
+      document.write("a: " + (42 > 3) + "<br>"); //will write true
+      document.write("b: " + (89 < 3) + "<br>"); //false
+      document.write("c: " + (10 == 5) + "<br>"); //false
+      document.write("<hr />");
+      document.write("<br />");
+    </script>
+  </head>
+
+  <body>
+    <h1>
+      JavaScript Expression and
+      <a href="https://www.w3schools.com/js/js_operators.asp" target="_blank">Operators</a>
+    </h1>
+
+    <h2>Operator Precedence</h2>
+    <script>
+      //operator precedence
+      //Multiplication (*) and division (/) have higher precedence than addition (+) and subtraction (-).
+      document.write(10 + 2 * 6);
+      document.write("<br />");
+      document.write((10 + 2) * 6);
+    </script>
+
+    <br />
+    <hr />
+
+    <h2>Relational and Logic Operators</h2>
+
+    <script>
+      //relational operator and logic
+      //JavaScript supports three logical operators: and - &&, or - ||, and not - !
+      let month = 7;
+      if (month <= 3 || month == 12) document.write("It's winter");
+      else document.write("It's not winter");
+    </script>
+
+    <br />
+    <hr />
+
+    <h2>Data Conversion</h2>
+
+    <script>
+      //data conversion
+      let a = 3.5;
+      let b = "3.5";
+      if (a == b) document.write("1 <br>"); //== equality operator
+      if (a === b) {
+        document.write("2");
+      } else {
+        document.write("a and b aren't the same data type.");
+      } //=== is exactly equal to - both value and data type (identity operator)
+    </script>
+
+    <br />
+    <hr />
+
+    <h2>with Statement</h2>
+
+    <script>
+      //with statment is used for simplification by reducing many references to one object
+      let phrase = "The kid runs quickly.";
+      with (phrase) {
+        document.write("The phrase is " + length + " characters.<br />");
+        document.write("In upper case it's: " + toUpperCase());
+      }
+    </script>
+  </body>
+</html>

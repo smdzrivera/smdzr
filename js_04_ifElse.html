@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>if else</title>
+  </head>
+
+  <body>
+    <p onclick="myFunction()" id="myVariable">Hello</p>
+    <p onclick="myFunction2()" id="myVariable2">Hello</p>
+
+    <script>
+    // if else only
+      function myFunction() {
+        var x = document.getElementById("myVariable");
+        if (x.innerHTML === "Hello") {
+          x.innerHTML = "How are you?";
+          x.style.cursor = "wait";
+        } else {
+          x.innerHTML = "Hello";
+          x.style.cursor = "wait";
+        }
+      }
+
+      //if else if
+      function myFunction2() {
+        var x = document.getElementById("myVariable2");
+        if (x.innerHTML === "Hello") {
+          x.innerHTML = "Swapped text!";
+          x.style.cursor = "help";
+        } else if (x.innerHTML === "Swapped text!") {
+          x.innerHTML = "Swapped text two!";
+          x.style.cursor = "pointer";
+        } else if (x.innerHTML === "Swapped text two!") {
+          x.innerHTML = "Swapped text three!";
+          x.style.cursor = "crosshair";
+        } else if (x.innerHTML === "Swapped text two!") {
+          x.innerHTML = "Swapped text four!";
+          x.style.cursor = "auto";
+        } else {
+          x.innerHTML = "Hello";
+          x.style.cursor = "progress";
+        }
+      }
+    </script>
+  </body>
+</html>

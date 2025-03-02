@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>We're All From Somewhere</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <style>
+      #human:hover {cursor: wait;}
+    </style>
+
+    <script>
+      // WebXR requires HTTPS, so the site doesn't work if someone manually enters
+      // the URL and ends up using HTTP. To work around this, force redirect from
+      // http to https for non-localhost addresses.
+      if (window.location.protocol == "http:" &&
+          window.location.hostname != "localhost" &&
+          window.location.hostname != "127.0.0.1" &&
+          window.location.hostname != "[::1]") {
+        window.location = window.location.href.replace('http:', 'https:');
+      }
+    </script>
+
+    <!-- import the webpage's javascript files -->
+    <script src="https://aframe.io/aframe/dist/aframe-master.min.js"></script>
+    <!-- a-frame extras is a collection of add-ons including components for controls, model loaders, pathfinding...
+       more info: https://github.com/c-frame/aframe-extras
+    <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.5.4/dist/aframe-extras.min.js"></script> -->
+    <script src="aframe-extras.js"></script>
+
+    <!-- Selection of original A-Frame environments
+     https://github.com/supermedium/aframe-environment-component 
+    <script src="https://unpkg.com/aframe-environment-component@1.3.3/dist/aframe-environment-component.min.js"></script>-->
+    <script src="https://cdn.jsdelivr.net/npm/aframe-environment-component@1.3.7/dist/aframe-environment-component.min.js"></script>
+
+    <!-- user events -->
+    <script src="https://cdn.jsdelivr.net/npm/aframe-event-set-component@5.0.0/dist/aframe-event-set-component.min.js"></script>
+  
+    <!-- Supersky
+       https://aframe.wiki/en/#!pages/environment.md -->
+    <script src="https://cdn.jsdelivr.net/npm/a-super-sky@1.1.1/super-sky.js"></script>
+    <!-- Star system -->
+    <script src="https://cdn.jsdelivr.net/gh/matthewbryancurtis/aframe-star-system-component@db4f1030/index.js"></script>
+
+    <script>
+      AFRAME.registerComponent('sound-events', {
+        init: function () {
+          var el = this.el;  // <a-box>
+          el.addEventListener('click', function () {
+            el.components.sound.playSound();
+          });
+          el.addEventListener('mouseleave', function () {
+            el.components.sound.pauseSound();
+          });
+        }
+      });
+      </script>
+
+  </head>
+  <body>
+
+    <a-scene fog="type: linear; color: yellow; density: 0.005">
+      <a-assets>
+        <a-asset-item id="human" src="img/lowpolyMale/scene.gltf"></a-asset-item>
+
+        <audio id="human01" src="audio/esfuerzo03.mp3" preload="auto"></audio>
+      </a-assets>
+
+      <!-- Player. -->
+      <a-entity id="rig"
+                movement-controls="constrainToNavMesh: true;
+                                   controls: checkpoint, gamepad, trackpad, keyboard, nipple;"
+                position="-7 0 21">
+        <a-entity camera
+                  position="0 1.6 0"
+                  look-controls="pointerLockEnabled: true">
+        <!-- mouse reticle -->
+          <a-cursor></a-cursor>
+        </a-entity>
+      </a-entity>
+
+      <!-- orbiduration is based on minutes -->
+       <a-super-sky 
+      orbitduration="3"
+      groundcolor="#7BC8A4">
+      </a-super-sky>
+
+      <!-- camera replaced by rig entity
+      <a-camera>
+        <a-cursor></a-cursor>
+      </a-camera>
+    -->
+
+      <!-- Ready-made environments include:
+      contact
+      egypt
+      yavapai
+      arches
+      dream
+      <a-entity environment="preset: contact; lighting: none; shadow: none; lightPosition: 0 2.15 0"></a-entity>
+      horizonColor: blue; 
+      ground: hills; 
+      groundColor: brown; 
+      groundTexture: walkernoise-->
+       
+      <a-entity environment="
+      preset: default; 
+      lighting: none; 
+      skyType:none;
+      groundColor: brown;
+      ground: noise;
+      groundTexture: walkernoise
+      "></a-entity>
+
+      <a-entity light="type: point; intensity: 1.0; position=1 3 -5"></a-entity>
+
+      <a-gltf-model src="#human"
+        scale="1.5 1.5 1.5"
+        position="1 1 -5"
+        sound="src: #human01"
+        sound-events>
+      </a-gltf-model>
+
+    </a-scene>
+
+    </body>
+</html>
