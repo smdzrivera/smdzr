@@ -1,145 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>We're All From Elsewhere</title>
+    <title>Random Place</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- a-frame extras is a collection of add-ons including components for controls, model loaders, pathfinding...
-       more info: https://github.com/c-frame/aframe-extras -->
-    <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.5.4/dist/aframe-extras.min.js"></script> 
-    
-    <!-- Selection of original A-Frame environments
-     https://github.com/supermedium/aframe-environment-component -->
-    <script src="https://cdn.jsdelivr.net/npm/aframe-environment-component@1.3.7/dist/aframe-environment-component.min.js"></script>
+    <!-- A-Frame Core Script -->
+    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
 
-    <!-- user events -->
+    <!-- A-Frame Extras for Movement Controls -->
+    <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.5.4/dist/aframe-extras.min.js"></script>
+
+    <!-- User Events -->
     <script src="https://cdn.jsdelivr.net/npm/aframe-event-set-component@5.0.0/dist/aframe-event-set-component.min.js"></script>
 
     <style>
       @keyframes fadeIn {
         0% {
-        opacity: 0;
-      }
-      100% {
-        opacity: 1;
-      }
-     }
-    #modal {
-      position: fixed;
-      top: 0;
-      left: 0;
-      background: rgba(0, 0, 0, 0.8);
-      z-index: 99999;
-      height: 100%;
-      width: 100%;
-      animation-name: fadeIn;
-      animation-duration: 3s;
-    }
-  .modalconent {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background: rgba(255,255,255,0.5);
-      width: 40%;
-      padding: 2em;
-      border-radius: 25px;
-      border: 4px solid #8b0000;
-      font-family: Arial, Helvetica, sans-serif;
-      font-size: 2em;
-      text-align: center;
-  }
-  button {
-    padding: .25em .5em .25em .5em;
-    border-radius: 20px;
-    border: 2px solid #8b0000;
-    background: rgba(255,255,255,0.6);
-    font-size: 1.5em;
-  }
-  </style>
-
-    <script>
-      AFRAME.registerComponent('sound-events', {
-        init: function () {
-          var el = this.el;
-          let isPlaying = false;
-
-          el.addEventListener('click', function () {
-          if(isPlaying) {
-              el.components.sound.pauseSound();
-              isPlaying = false;
-            } else {
-              el.components.sound.playSound();
-              isPlaying = true;
-            }
-          });
+          opacity: 0;
         }
-      });
-      </script>
-
+        100% {
+          opacity: 1;
+        }
+      }
+      #modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        background: rgba(0, 0, 0, 0.8);
+        z-index: 99999;
+        height: 100%;
+        width: 100%;
+        animation-name: fadeIn;
+        animation-duration: 3s;
+      }
+      .modalconent {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: rgba(255, 255, 255, 0.5);
+        width: 40%;
+        padding: 2em;
+        border-radius: 25px;
+        border: 4px solid #8b0000;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 2em;
+        text-align: center;
+      }
+      button {
+        padding: 0.25em 0.5em;
+        border-radius: 20px;
+        border: 2px solid #8b0000;
+        background: rgba(255, 255, 255, 0.6);
+        font-size: 1.5em;
+      }
+    </style>
   </head>
   <body>
-
+    <!-- Modal -->
     <div id="modal">
       <div class="modalconent">
         <h1>Something has happened</h1>
-
         <h2>You must figure out something</h2>
         <button id="button">Ok(?)</button>
       </div>
     </div>
 
-    <a-scene fog="type: linear; color: yellow; density: 0.005">
+    <!-- A-Frame Scene -->
+    <a-scene>
+      <!-- Assets -->
       <a-assets>
-
+        <!-- Replace with your GLB file if possible -->
         <a-asset-item id="room" src="roomenvironment.glb"></a-asset-item>
-    
       </a-assets>
 
-      <!-- Player. -->
-      <a-entity id="rig"
-                movement-controls="constrainToNavMesh: true;
-                                   controls: checkpoint, gamepad, trackpad, keyboard, nipple;"
-                position="0 0 0">
-        <a-entity camera
-                  position="0 1.6 0"
-                  look-controls="pointerLockEnabled: true">
-          <!-- mouse reticle -->
+      <!-- Model -->
+      <a-entity gltf-model="#room" position="0 0 -5" scale="1 1 1"></a-entity>
+
+      <!-- Ground and Sky -->
+      <a-plane position="0 0 -4" rotation="-90 0 0" width="10" height="10" color="#7BC8A4"></a-plane>
+      <a-sky color="#87CEEB"></a-sky>
+
+      <!-- Lighting -->
+      <a-entity light="type: ambient; color: #FFF; intensity: 1"></a-entity>
+      <a-entity light="type: directional; color: #FFF; intensity: 0.5" position="-1 2 -3"></a-entity>
+
+      <!-- Camera with Movement Controls -->
+      <a-entity id="rig" position="-20 3 0" rotation="0 -90 0">
+        <a-entity
+          camera
+          look-controls
+          wasd-controls
+          position="0 1.6 0"
+        >
           <a-cursor></a-cursor>
         </a-entity>
       </a-entity>
-
-       
-      <a-entity environment="
-      preset: default; 
-      lighting: none; 
-      skyType: none;
-      groundColor: brown;
-      ground: noise;
-      groundTexture: walkernoise
-      "></a-entity>
-
-      <a-entity light="type: point; intensity: 1.0; position=1 3 -5"></a-entity>
-
-
-      <a-gltf-model src="#room"
-        position="0 0 -10">
-        </a-gltf-model>
-
     </a-scene>
 
     <script>
-      // close title modal and trigger background audio
-      window.onload = function() {
-        const audioElement = new Audio('audio/wind.mp3');
-        
-        document.getElementById("button").onclick = function() {
+      // Close title modal
+      window.onload = function () {
+        document.getElementById("button").onclick = function () {
           document.getElementById("modal").style.display = "none";
-          audioElement.play();
         };
       };
     </script>
-
-    </body>
+  </body>
 </html>
