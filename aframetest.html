@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>We're All From Elsewhere</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- super-sky doesn't work with latest A-Frame release 1.7.0  -->
+    <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
+
+    <!-- a-frame extras is a collection of add-ons including components for controls, model loaders, pathfinding...
+       more info: https://github.com/c-frame/aframe-extras -->
+    <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.5.4/dist/aframe-extras.min.js"></script> 
+    
+    <!-- Selection of original A-Frame environments
+     https://github.com/supermedium/aframe-environment-component -->
+    <script src="https://cdn.jsdelivr.net/npm/aframe-environment-component@1.3.7/dist/aframe-environment-component.min.js"></script>
+
+    <!-- user events -->
+    <script src="https://cdn.jsdelivr.net/npm/aframe-event-set-component@5.0.0/dist/aframe-event-set-component.min.js"></script>
+  
+    <!-- Supersky
+       https://aframe.wiki/en/#!pages/environment.md -->
+    <script src="https://cdn.jsdelivr.net/npm/a-super-sky@1.1.1/super-sky.js"></script>
+    <!-- Star system -->
+    <script src="https://cdn.jsdelivr.net/gh/matthewbryancurtis/aframe-star-system-component@db4f1030/index.js"></script>
+
+    <style>
+      @keyframes fadeIn {
+        0% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+      }
+     }
+    #modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 99999;
+      height: 100%;
+      width: 100%;
+      animation-name: fadeIn;
+      animation-duration: 3s;
+    }
+  .modalconent {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(255,255,255,0.5);
+      width: 40%;
+      padding: 2em;
+      border-radius: 25px;
+      border: 4px solid #8b0000;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 2em;
+      text-align: center;
+  }
+  button {
+    padding: .25em .5em .25em .5em;
+    border-radius: 20px;
+    border: 2px solid #8b0000;
+    background: rgba(255,255,255,0.6);
+    font-size: 1.5em;
+  }
+  </style>
+
+    <script>
+      AFRAME.registerComponent('sound-events', {
+        init: function () {
+          var el = this.el;
+          let isPlaying = false;
+
+          el.addEventListener('click', function () {
+          if(isPlaying) {
+              el.components.sound.pauseSound();
+              isPlaying = false;
+            } else {
+              el.components.sound.playSound();
+              isPlaying = true;
+            }
+          });
+        }
+      });
+      </script>
+
+  </head>
+  <body>
+
+    <div id="modal">
+      <div class="modalconent">
+        <h1>We Are All from Elsewhere</h1>
+
+        <h2>As WE as VOTERS discriminate against new immigrants, consider your family roots.</h2>
+        <button id="button">Enter</button>
+      </div>
+    </div>
+
+    <a-scene fog="type: linear; color: yellow; density: 0.005">
+      <a-assets>
+        <!-- https://sketchfab.com/3d-models/elephant-animation-idle-a8e7e10f005f4baab0a2f5079d759fcd -->
+        <a-asset-item id="elephant" src="img/elephant/scene.gltf"></a-asset-item>
+        
+        <a-asset-item id="human" src="img/lowpolyMale/scene.gltf"></a-asset-item>
+
+        <audio id="human01" src="audio/esfuerzo03.mp3" preload="auto"></audio>
+      </a-assets>
+
+      <!-- Player. -->
+      <a-entity id="rig"
+                movement-controls="constrainToNavMesh: true;
+                                   controls: checkpoint, gamepad, trackpad, keyboard, nipple;"
+                position="0 0 0">
+        <a-entity camera
+                  position="0 1.6 0"
+                  look-controls="pointerLockEnabled: true">
+          <!-- mouse reticle -->
+          <a-cursor></a-cursor>
+        </a-entity>
+      </a-entity>
+
+      <!-- orbit duration is based on minutes -->
+       <a-super-sky 
+      orbitduration="3"
+      groundcolor="#7BC8A4">
+      </a-super-sky>
+       
+      <a-entity environment="
+      preset: default; 
+      lighting: none; 
+      skyType: none;
+      groundColor: brown;
+      ground: noise;
+      groundTexture: walkernoise
+      "></a-entity>
+
+      <a-entity light="type: point; intensity: 1.0; position=1 3 -5"></a-entity>
+
+      <a-gltf-model src="#human"
+        scale="1.5 1.5 1.5"
+        position="-5 1.5 -10"
+        rotation="0 60 0"
+        sound="src: #human01"
+        sound-events>
+      </a-gltf-model>
+
+      <a-gltf-model src="#elephant"
+        scale="0.1 0.1 0.1"
+        position="0 0.5 -40"
+        rotation="0 0 0"
+        sound="src: #human01"
+        animation-mixer="clip: idle"
+        sound-events>
+      </a-gltf-model>
+
+    </a-scene>
+
+    <script>
+      // close title modal and trigger background audio
+      window.onload = function() {
+        const audioElement = new Audio('audio/wind.mp3');
+        
+        document.getElementById("button").onclick = function() {
+          document.getElementById("modal").style.display = "none";
+          audioElement.play();
+        };
+      };
+    </script>
+
+    </body>
+</html>
