@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Random Place</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- A-Frame Core Script -->
+    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+
+    <!-- A-Frame Extras for Movement Controls -->
+    <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.5.4/dist/aframe-extras.min.js"></script>
+
+    <!-- User Events -->
+    <script src="https://cdn.jsdelivr.net/npm/aframe-event-set-component@5.0.0/dist/aframe-event-set-component.min.js"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+      @keyframes fadeIn {
+        0% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+      #modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        background: rgba(0, 0, 0, 0.8);
+        z-index: 99999;
+        height: 100%;
+        width: 100%;
+        animation-name: fadeIn;
+        animation-duration: 1s;
+      }
+      .modalconent {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: rgba(22, 22, 22, 0.884);
+        width: 40%;
+        padding: 3em;
+        border-radius: 5px;
+        border: 8px solid #FF007F;
+        font-family: 'Poppins', sans-serif;
+        color: #00FFAA;
+        text-align: center;
+      }
+      #button {
+        padding: 0.25em 0.5em;
+        border-radius: 5px;
+        width: 66%;
+        border: 2px solid #FF007F;
+        background: #1F1F1F;
+        color: #00FFAA;
+      }
+
+        #button:hover {
+          background: #00FFAA;
+          color: #1F1F1F;
+        }
+
+    
+    </style>
+  </head>
+  <body>
+    <!-- Modal -->
+    <div id="modal">
+      <div class="modalconent">
+        <h1>Something has happened</h1>
+        <h2>You must figure out something</h2>
+        <button id="button">Ok???</button>
+      </div>
+    </div>
+
+    <!-- A-Frame Scene -->
+    <a-scene>
+      <!-- Assets -->
+      <a-assets>
+        <!-- Replace with your GLB file if possible -->
+        <a-asset-item id="room" src="room1.glb"></a-asset-item>
+        <a-asset-item id="tv" src="old_russian_tv.glb"></a-asset-item>
+        <a-asset-item id="tree-scene" src="tree-scene.glb"></a-asset-item>
+        <a-asset-item id="residential-building-set" src="residential-building-set.glb"></a-asset-item>
+        <!-- Add the soil texture here -->
+        <img id="soil-texture" src="soil-texture.jpg">
+        <!-- Images -->
+         <video src="animation.mp4"
+         id="animation1"
+         autoplay
+         loop
+        >
+      </a-assets>
+
+      <!-- Model -->
+      <a-entity gltf-model="#room" position="0 0 -5" scale="1 1 1"></a-entity>
+
+      <a-entity gltf-model="#tv" position="3 3.5 3" scale="7 7 7" rotation="0 -90 0"></a-entity>
+
+      <a-entity gltf-model="#tree-scene" position="17 0 -15" scale="5 5 5"></a-entity>
+
+      <a-entity gltf-model="#residential-building-set" position="233 0 -233" scale="1 1 1"></a-entity>
+      <!-- Ground with Soil Texture -->
+      <a-plane
+        src="#soil-texture"
+        position="0 0.1 0"
+        rotation="-90 0 0"
+        width="100"
+        height="100"
+        repeat="100 100"
+        color="#7BC8A4"
+      ></a-plane>
+
+      <!-- Sky -->
+      <a-sky src="orange-sky.jpg" color="#87CEEB"></a-sky>
+
+      <!-- Lighting -->
+      <a-entity light="type: ambient; color: #FFF; intensity: 1"></a-entity>
+      <a-entity light="type: directional; color: #FFF; intensity: 0.5" position="0 4 0"></a-entity>
+      <a-entity light="type: directional; color: #FFF; intensity: 0.5" position="-2 2 0"></a-entity>
+
+      <!-- Camera with Movement Controls -->
+      <a-entity id="rig" position="0 3 0" rotation="0 -90 0">
+        <a-entity
+          camera
+          look-controls
+          wasd-controls
+          position="0 1.6 6"
+        >
+          <a-cursor></a-cursor>
+        </a-entity>
+      </a-entity>
+      
+      <a-plane
+        position="5.2 6.2 -4.05"
+        rotation="0 -90 0"
+        width="5"
+        height="7"
+        scale="0.45 0.45 0.45"
+        src="#animation1"
+      ></a-plane>
+
+    
+    </a-scene>
+
+    <script>
+      // Close title modal
+      window.onload = function () {
+        document.getElementById("button").onclick = function () {
+          document.getElementById("modal").style.display = "none";
+        };
+      };
+    </script>
+   <script>
+   AFRAME.registerComponent('flying-controls', {
+     init: function () {
+       const camera = this.el;
+       const movementSpeed = 0.1;
+ 
+       // Add event listeners for Q (up) and E (down)
+       window.addEventListener('keydown', (event) => {
+         const position = camera.getAttribute('position');
+         switch (event.key.toLowerCase()) {
+           case 'q': // Move up
+             position.y += movementSpeed;
+             break;
+           case 'e': // Move down
+             position.y -= movementSpeed;
+             break;
+         }
+         camera.setAttribute('position', position);
+       });
+     },
+   });
+ 
+   // Add the custom flying controls to the camera
+   document.querySelector('#camera').setAttribute('flying-controls', '');
+ </script>
+  </body>
+</html>
